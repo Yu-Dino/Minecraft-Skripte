@@ -1,0 +1,24 @@
+options:
+    bow-name: "&4&lZerstörender-Bogen" # Fett und gelb
+
+on script load:
+    broadcast "&aDas TnT-bogen-Skript wurde erfolgreich geladen!"
+
+command /NICHT-EINGEBEN-ES-WIRD-ALLES-IN-DIE-LUFT-FLIEGEN{~Yu}:
+    trigger:
+        give player a bow named {@bow-name} with lore "&7Ein magischer Bogen, der tnt regnen lässt."
+        enchant player's tool with multishot 0
+        send "&aDu hast den &e&l &amit Multishot erhalten!"
+
+on shoot:
+    if shooter is a player:
+        if shooter's tool's display name is {@bow-name}:
+            set metadata value "Zerstörender-Bogen" of projectile to true
+
+on projectile hit:
+    if projectile is an arrow:
+        if projectile has metadata value "Zerstörender-Bogen":
+            set {_location} to location of projectile
+            loop 100 times:
+                wait 1 tick
+                summon tnt at {_location}

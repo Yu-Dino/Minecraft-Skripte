@@ -1,0 +1,34 @@
+command /Yu_Dinos-Strike:
+    permission: admin.trident
+    permission message: "&cDu hast keine Berechtigung, diesen Befehl auszuführen!"
+    trigger:
+        give player a trident named "&b&lYu_Dinos Strike" with lore "&eSpawnt Blitze bei Klick"
+        send "&bDu hast den &4&lRP-TRIDENT &berhalten!"
+
+on rightclick:
+    if player's tool is trident:
+        if lore of player's tool contains "&eSpawnt Blitze bei Klick":
+            set {_target} to target block of player
+            if {_target} is not air:
+                loop 100 times:
+                    summon lightning bolt at {_target}
+                send "&a100 Blitze wurden an der Zielposition gespawnt!" to player
+            else:
+                send "&cDu schaust auf nichts, daher können keine Blitze gespawnt werden!" to player
+
+on leftclick:
+    if player's tool is trident:
+        if lore of player's tool contains "&eSpawnt Blitze bei Klick":
+            set {_target} to target block of player
+            if {_target} is not air:
+                summon lightning bolt at {_target}
+                send "&aEin Blitz wurde an der Zielposition gespawnt!" to player
+            else:
+                send "&cDu schaust auf nichts, daher kann kein Blitz gespawnt werden!" to player
+
+on shoot:
+    if projectile is trident:
+        if shooter is a player:
+            if lore of tool of shooter contains "&eSpawnt Blitze bei Klick":
+                cancel event
+                send "&cDu kannst den &bBlitzdreizack &cnicht werfen!" to shooter
